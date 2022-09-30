@@ -5,7 +5,7 @@ import {
   InferAttributes,
   InferCreationAttributes,
 } from "sequelize"
-import { sequelize } from "../db/dbPool"
+import { sequelize } from "../../db/dbPool"
 
 export interface IUserModel
   extends Model<
@@ -23,6 +23,7 @@ export const UserModel = sequelize.define<IUserModel>("User", {
   uid: {
     type: DataTypes.UUID,
     defaultValue: DataTypes.UUIDV4,
+    allowNull: false,
     primaryKey: true,
   },
   email: {

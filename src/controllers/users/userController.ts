@@ -1,6 +1,6 @@
 import { Response, Request } from "express"
 
-import { IUserModel, UserModel } from "../../models"
+import { IUserModel, UserModel } from "../../models/User"
 
 export const getUsersController = async (req: Request, res: Response) => {
   try {
