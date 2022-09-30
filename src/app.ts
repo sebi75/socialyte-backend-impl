@@ -11,6 +11,9 @@ const PORT = process.env.PORT
 connectDb()
 
 import { userRouter } from "./routes"
+import { helloController } from "./controllers/helloController"
+
+app.get("/test", helloController)
 
 app.use("/api", userRouter)
 
