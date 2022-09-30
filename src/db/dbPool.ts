@@ -4,7 +4,8 @@ import { Sequelize } from "sequelize"
 
 dotenv.config()
 
-const { database, user, password, port, host } = getDbConfiguration()
+const { database, user, password, port, host } =
+  getDbConfiguration("development")
 export const sequelize = new Sequelize(
   `mysql://${user}:${password}@${host}:${port}/${database}`,
   ...sequelizeConfig

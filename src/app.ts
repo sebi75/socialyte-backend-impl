@@ -5,7 +5,7 @@ import { connectDb } from "./db/connection"
 
 dotenv.config()
 
-const app = express()
+const app: express.Application = express()
 const PORT = process.env.PORT
 
 connectDb()
