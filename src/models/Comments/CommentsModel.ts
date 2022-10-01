@@ -7,6 +7,8 @@ import {
 } from "sequelize"
 import { sequelize } from "../../db/dbPool"
 
+import { PostsModel, UserModel } from "../"
+
 export interface ICommentsModel
   extends Model<
     InferAttributes<ICommentsModel>,
@@ -47,3 +49,6 @@ export const CommentsModel = sequelize.define<ICommentsModel>("Comments", {
     type: DataTypes.DATE,
   },
 })
+
+CommentsModel.belongsTo(PostsModel, { foreignKey: "postId" })
+CommentsModel.belongsTo(UserModel, { foreignKey: "userId" })
