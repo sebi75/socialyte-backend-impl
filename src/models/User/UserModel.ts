@@ -17,6 +17,7 @@ export interface IUsersModel
   userId: CreationOptional<string>
   email: string
   username: string
+  password: string
   createdAt: CreationOptional<Date>
   updatedAt: CreationOptional<Date>
 }
@@ -32,6 +33,10 @@ export const UsersModel = sequelize.define<IUsersModel>("Users", {
     type: DataTypes.STRING,
     allowNull: false,
     unique: true,
+  },
+  password: {
+    type: DataTypes.STRING,
+    allowNull: false,
   },
   username: {
     type: DataTypes.STRING,
