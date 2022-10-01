@@ -7,7 +7,7 @@ import {
 } from "sequelize"
 import { sequelize } from "../../db/dbPool"
 
-import { PostsModel, UserModel } from "../"
+import { PostsModel, UsersModel } from "../"
 
 export interface ICommentsModel
   extends Model<
@@ -51,4 +51,4 @@ export const CommentsModel = sequelize.define<ICommentsModel>("Comments", {
 })
 
 CommentsModel.belongsTo(PostsModel, { foreignKey: "postId" })
-CommentsModel.belongsTo(UserModel, { foreignKey: "userId" })
+CommentsModel.belongsTo(UsersModel, { foreignKey: "userId" })
