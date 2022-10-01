@@ -51,5 +51,8 @@ export const UsersModel = sequelize.define<IUsersModel>("Users", {
 UsersModel.hasMany(PostsModel, { foreignKey: "ownerId" })
 UsersModel.hasMany(LikesModel, { foreignKey: "userId" })
 UsersModel.hasMany(CommentsModel, { foreignKey: "userId" })
-UsersModel.hasMany(ConnectionsModel, { foreignKey: "userId" })
-UsersModel.hasMany(ConnectionsModel, { foreignKey: "followerId" })
+UsersModel.hasMany(ConnectionsModel, { as: "userId", foreignKey: "userId" })
+UsersModel.hasMany(ConnectionsModel, {
+  as: "followerId",
+  foreignKey: "followerId",
+})
