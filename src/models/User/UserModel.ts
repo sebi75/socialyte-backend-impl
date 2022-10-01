@@ -7,20 +7,20 @@ import {
 } from "sequelize"
 import { sequelize } from "../../db/dbPool"
 
-export interface IUserModel
+export interface IUsersModel
   extends Model<
-    InferAttributes<IUserModel>,
-    InferCreationAttributes<IUserModel>
+    InferAttributes<IUsersModel>,
+    InferCreationAttributes<IUsersModel>
   > {
-  uid: CreationOptional<string>
+  userId: CreationOptional<string>
   email: string
   username: string
   createdAt: CreationOptional<Date>
   updatedAt: CreationOptional<Date>
 }
 
-export const UserModel = sequelize.define<IUserModel>("User", {
-  uid: {
+export const UsersModel = sequelize.define<IUsersModel>("Users", {
+  userId: {
     type: DataTypes.UUID,
     defaultValue: DataTypes.UUIDV4,
     allowNull: false,
