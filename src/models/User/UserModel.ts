@@ -7,6 +7,8 @@ import {
 } from "sequelize"
 import { sequelize } from "../../db/dbPool"
 
+import { PostsModel, LikesModel, ConnectionsModel, CommentsModel } from "../"
+
 export interface IUsersModel
   extends Model<
     InferAttributes<IUsersModel>,
@@ -15,6 +17,7 @@ export interface IUsersModel
   userId: CreationOptional<string>
   email: string
   username: string
+  password: string
   createdAt: CreationOptional<Date>
   updatedAt: CreationOptional<Date>
 }
@@ -31,6 +34,10 @@ export const UsersModel = sequelize.define<IUsersModel>("Users", {
     allowNull: false,
     unique: true,
   },
+  password: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
   username: {
     type: DataTypes.STRING,
     allowNull: false,
@@ -44,4 +51,13 @@ export const UsersModel = sequelize.define<IUsersModel>("Users", {
     type: DataTypes.DATE,
     defaultValue: DataTypes.NOW,
   },
+})
+
+UsersModel.hasMany(PostsModel, { foreignKey: "ownerId" })
+UsersModel.hasMany(LikesModel, { foreignKey: "userId" })
+UsersModel.hasMany(CommentsModel, { foreignKey: "userId" })
+UsersModel.hasMany(ConnectionsModel, { as: "userId", foreignKey: "userId" })
+UsersModel.hasMany(ConnectionsModel, {
+  as: "followerId",
+  foreignKey: "followerId",
 })

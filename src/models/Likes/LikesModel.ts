@@ -7,6 +7,9 @@ import {
 } from "sequelize"
 import { sequelize } from "../../db/dbPool"
 
+import { UsersModel } from "../User"
+import { PostsModel } from "../Posts"
+
 export interface ILikedModel
   extends Model<
     InferAttributes<ILikedModel>,
@@ -28,13 +31,24 @@ export const LikesModel = sequelize.define<ILikedModel>("Likes", {
   postId: {
     type: DataTypes.UUID,
     allowNull: false,
+    references: {
+      model: "Posts",
+      key: "postId",
+    },
   },
   userId: {
     type: DataTypes.UUID,
     allowNull: false,
+    references: {
+      model: "Users",
+      key: "userId",
+    },
   },
   createdAt: {
     type: DataTypes.DATE,
     defaultValue: DataTypes.NOW,
   },
 })
+
+LikesModel.belongsTo(UsersModel, { foreignKey: "userId" })
+LikesModel.belongsTo(PostsModel, { foreignKey: "postId" })

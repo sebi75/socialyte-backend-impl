@@ -2,9 +2,9 @@ import { ICommentsModel, CommentsModel } from "./Comments"
 import { IConnectionsModel, ConnectionsModel } from "./Connections"
 import { ILikedModel, LikesModel } from "./Likes"
 import { IPostsModel, PostsModel } from "./Posts"
-import { IUserModel, UserModel } from "./User"
+import { IUsersModel, UsersModel } from "./User"
 
-export { CommentsModel, ConnectionsModel, LikesModel, PostsModel, UserModel }
+export { CommentsModel, ConnectionsModel, LikesModel, PostsModel, UsersModel }
 
 //the array is for usage in truncating.ts for testing
 export const modelsArr = [
@@ -12,7 +12,7 @@ export const modelsArr = [
   ConnectionsModel,
   LikesModel,
   PostsModel,
-  UserModel,
+  UsersModel,
 ]
 
 export type {
@@ -20,5 +20,5 @@ export type {
   IConnectionsModel,
   ILikedModel,
   IPostsModel,
-  IUserModel,
+  IUsersModel,
 }

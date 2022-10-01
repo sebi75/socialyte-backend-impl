@@ -7,6 +7,8 @@ import {
 } from "sequelize"
 import { sequelize } from "../../db/dbPool"
 
+import { UsersModel } from "../User"
+
 export interface IConnectionsModel
   extends Model<
     InferAttributes<IConnectionsModel>,
@@ -41,3 +43,6 @@ export const ConnectionsModel = sequelize.define<IConnectionsModel>(
     },
   }
 )
+
+ConnectionsModel.belongsTo(UsersModel, { foreignKey: "userId" })
+ConnectionsModel.belongsTo(UsersModel, { foreignKey: "followerId" })
