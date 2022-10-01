@@ -29,6 +29,10 @@ export const PostsModel = sequelize.define<IPostsModel>("Posts", {
   ownerId: {
     type: DataTypes.UUID,
     allowNull: false,
+    references: {
+      model: "Users",
+      key: "userId",
+    },
   },
   postCaption: {
     type: DataTypes.STRING,
