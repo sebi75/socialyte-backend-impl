@@ -1,6 +1,8 @@
+import dotenv from "dotenv"
 export type envType = "development" | "production" | "test"
 
 export const getDbConfiguration = (env: envType) => {
+  dotenv.config()
   switch (env) {
     case "development":
       return {
