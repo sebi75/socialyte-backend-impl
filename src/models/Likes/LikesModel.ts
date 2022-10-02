@@ -7,9 +7,6 @@ import {
 } from "sequelize"
 import { sequelize } from "../../db/dbPool"
 
-import { UsersModel } from "../User"
-import { PostsModel } from "../Posts"
-
 export interface ILikedModel
   extends Model<
     InferAttributes<ILikedModel>,
@@ -49,6 +46,3 @@ export const LikesModel = sequelize.define<ILikedModel>("Likes", {
     defaultValue: DataTypes.NOW,
   },
 })
-
-LikesModel.belongsTo(UsersModel, { foreignKey: "userId" })
-LikesModel.belongsTo(PostsModel, { foreignKey: "postId" })

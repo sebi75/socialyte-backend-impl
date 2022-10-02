@@ -7,15 +7,13 @@ import {
 } from "sequelize"
 import { sequelize } from "../../db/dbPool"
 
-import { UsersModel } from "../User"
-
 export interface IConnectionsModel
   extends Model<
     InferAttributes<IConnectionsModel>,
     InferCreationAttributes<IConnectionsModel>
   > {
   connectionsId: CreationOptional<string>
-  userId: string
+  followingId: string
   followerId: string
   createdAt: CreationOptional<Date>
 }
@@ -29,7 +27,7 @@ export const ConnectionsModel = sequelize.define<IConnectionsModel>(
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
     },
-    userId: {
+    followingId: {
       type: DataTypes.UUID,
       allowNull: false,
     },
@@ -43,6 +41,3 @@ export const ConnectionsModel = sequelize.define<IConnectionsModel>(
     },
   }
 )
-
-ConnectionsModel.belongsTo(UsersModel, { foreignKey: "userId" })
-ConnectionsModel.belongsTo(UsersModel, { foreignKey: "followerId" })
