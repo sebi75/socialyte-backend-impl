@@ -17,7 +17,7 @@ const connectToDB = async (env: "test" | "development") => {
   try {
     await sequelize.authenticate()
     if (env === "test") {
-      await sequelize.sync({ alter: true, force: true })
+      await sequelize.sync({ alter: true })
     } else {
       await sequelize.sync({ alter: true })
     }

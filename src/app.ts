@@ -1,7 +1,6 @@
 import express from "express"
 import * as dotenv from "dotenv"
 
-import { connectDb } from "./db/connection"
 import bodyParser from "body-parser"
 import { setAssociations } from "./models"
 

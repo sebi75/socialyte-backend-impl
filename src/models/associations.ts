@@ -34,5 +34,8 @@ export const setAssociations = () => {
   CommentsModel.belongsTo(PostsModel, { foreignKey: "postId" })
   CommentsModel.belongsTo(UsersModel, { foreignKey: "userId" })
 
-  UsersProfileModel.belongsTo(UsersModel, { foreignKey: "userId" })
+  UsersProfileModel.belongsTo(UsersModel, {
+    foreignKey: "userId",
+    onDelete: "CASCADE",
+  })
 }
