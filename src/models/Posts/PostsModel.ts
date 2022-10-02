@@ -7,8 +7,6 @@ import {
 } from "sequelize"
 import { sequelize } from "../../db/dbPool"
 
-import { UsersModel } from "../User/UserModel"
-
 export interface IPostsModel
   extends Model<
     InferAttributes<IPostsModel>,
@@ -49,5 +47,3 @@ export const PostsModel = sequelize.define<IPostsModel>("Posts", {
     defaultValue: DataTypes.NOW,
   },
 })
-
-PostsModel.belongsTo(UsersModel, { foreignKey: "ownerId" })

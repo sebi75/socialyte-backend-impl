@@ -1,6 +1,3 @@
-import {
-  getUsersController,
-  createUsersController,
-} from "./users/userController"
+import { signupController } from "./auth/signupController"
 
-export { getUsersController, createUsersController }
+export { signupController }

@@ -1,7 +1,9 @@
-import express, { Response, Request } from "express"
+import express from "express"
 import * as dotenv from "dotenv"
 
 import { connectDb } from "./db/connection"
+import bodyParser from "body-parser"
+import { setAssociations } from "./models"
 
 dotenv.config()
 
@@ -9,13 +11,12 @@ const app: express.Application = express()
 const PORT = process.env.PORT
 
 connectDb()
+setAssociations()
+app.use(bodyParser.json())
 
-import { userRouter } from "./routes"
-import { helloController } from "./controllers/helloController"
+import { authRouter } from "./routes"
 
-app.get("/test", helloController)
-
-app.use("/api", userRouter)
+app.use("/api", authRouter)
 
 app.listen(PORT, () => {
   console.log(`Server is running at http://localhost:${PORT}`)
