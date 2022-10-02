@@ -8,6 +8,7 @@ import { setAssociations } from "./models"
 dotenv.config()
 
 //TODO: create an enum that contains the types of errors the api can encounter
+//TODO: find a way to mock the JWT token in the tests (maybe sign a new one for a newly created user and have it available during tests run)
 
 const app: express.Application = express()
 const PORT = process.env.PORT
