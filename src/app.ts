@@ -13,11 +13,11 @@ dotenv.config()
 const app: express.Application = express()
 const PORT = process.env.PORT
 
-connectDb()
 setAssociations()
 app.use(bodyParser.json())
 
 import { authRouter } from "./routes"
+import { logger } from "./utils"
 
 app.use("/api", authRouter)
 

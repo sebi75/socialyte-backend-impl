@@ -14,9 +14,7 @@ export interface IUsersProfileModel
   > {
   userProfileId: CreationOptional<string>
   userId: CreationOptional<string>
-  profilePicture: CreationOptional<string>
   bio: CreationOptional<string>
-  interests: CreationOptional<Array<string>>
   country: CreationOptional<string>
   city: CreationOptional<string>
   updatedAt: CreationOptional<Date>
@@ -40,16 +38,8 @@ export const UsersProfileModel = sequelize.define<IUsersProfileModel>(
         key: "userId",
       },
     },
-    profilePicture: {
-      type: DataTypes.BLOB,
-      allowNull: true,
-    },
     bio: {
       type: DataTypes.STRING,
-      allowNull: true,
-    },
-    interests: {
-      type: DataTypes.ARRAY(DataTypes.STRING),
       allowNull: true,
     },
     country: {
