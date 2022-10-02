@@ -7,6 +7,8 @@ import { setAssociations } from "./models"
 
 dotenv.config()
 
+//TODO: create an enum that contains the types of errors the api can encounter
+
 const app: express.Application = express()
 const PORT = process.env.PORT
 
