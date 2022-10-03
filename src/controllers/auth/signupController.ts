@@ -7,9 +7,11 @@ import dotenv from "dotenv"
 dotenv.config()
 
 export const signupController = async (req: Request, res: Response) => {
+  const { email, password, username } = req.body
+
   const userExists = await UsersModel.findOne({
     where: {
-      email: req.body.email,
+      email: email,
     },
   })
 
@@ -20,18 +22,18 @@ export const signupController = async (req: Request, res: Response) => {
     })
   }
 
-  const hashedPassword = encryptPassword(req.body.password)
+  const hashedPassword = encryptPassword(password)
   try {
     const user = await UsersModel.create({
-      email: req.body.email,
+      email: email,
       hashed_password: hashedPassword,
-      username: req.body.username,
+      username: username,
     })
     const usersProfile = await UsersProfileModel.create({
       userId: user.userId,
     })
 
-    logger.info(`New user created with email: ${req.body.email}`)
+    logger.info(`New user created with email: ${email}`)
     //generate token at successfull signup so the user doesn't have to manually signin right after
     const token = jwt.sign(
       { email: user.email, userId: user.userId },

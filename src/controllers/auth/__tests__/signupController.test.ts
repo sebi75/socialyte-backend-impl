@@ -4,6 +4,12 @@ import { Methods } from "../../../helpers/types"
 import truncate from "../../../scripts/db/truncate"
 import { UsersModel } from "../../../models"
 import { encryptPassword } from "../../../utils/encryptPassword"
+import request from "supertest"
+import express from "express"
+import { signupValidatorMiddleware } from "../../../helpers/validation/validators"
+
+const app = express()
+app.post("/auth/signup", signupValidatorMiddleware, signupController)
 
 let users = userModelFactory(5)
 
@@ -66,10 +72,69 @@ describe("signupController", () => {
     expect(userFromDb?.username).toEqual(req.body.username)
     expect(userFromDb?.hashed_password).toEqual(encryptedPassword)
   })
+
+  it("shouldn't signup users for invalid input data and so fail validation", async () => {
+    const req: ICrazyRequest = {
+      body: {
+        email: null,
+        password: users[0].password,
+        username: users[0].username,
+      },
+      headers: {
+        "Content-Type": "application/json",
+      },
+      method: Methods.POST,
+    }
+
+    const response = await request(app).post("/auth/signup").send(req.body)
+    expect(response.status).toBe(400)
+
+    req.body.email = "ab"
+    const response2 = await request(app).post("/auth/signup").send(req.body)
+    expect(response2.status).toBe(400)
+
+    req.body.email = users[0].email
+    req.body.password = null
+    const response3 = await request(app).post("/auth/signup").send(req.body)
+    expect(response3.status).toBe(400)
+
+    req.body.password = "ab"
+    const response4 = await request(app).post("/auth/signup").send(req.body)
+    expect(response4.status).toBe(400)
+
+    req.body.password = "fighvrt97gyr97gv6f87v6e97v6cd9s7c6df976vdf"
+    const response5 = await request(app).post("/auth/signup").send(req.body)
+    expect(response5.status).toBe(400)
+
+    req.body.password = users[0].password
+    req.body.username = null
+    const response6 = await request(app).post("/auth/signup").send(req.body)
+    expect(response6.status).toBe(400)
+
+    req.body.username = "ab"
+    const response7 = await request(app).post("/auth/signup").send(req.body)
+    expect(response7.status).toBe(400)
+
+    req.body.username = "fighvrt97gyr97gv6f87v6e97v6cd9s7c6df976vdf"
+    const response8 = await request(app).post("/auth/signup").send(req.body)
+    expect(response8.status).toBe(400)
+  })
 })
 
 function mockResponse() {
   const send = jest.fn()
   const status = jest.fn(() => ({ send }))
   return { res: { status }, send, status }
+}
+
+interface ICrazyRequest {
+  body: {
+    email: string | null
+    password: string | null
+    username: string | null
+  }
+  headers: {
+    "Content-Type": string
+  }
+  method: Methods
 }

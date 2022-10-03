@@ -8,6 +8,7 @@ dotenv.config()
 
 export const signinController = async (req: Request, res: Response) => {
   const { email, password } = req.body
+
   const user = await UsersModel.findOne({
     where: {
       email,

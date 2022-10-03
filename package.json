@@ -22,7 +22,8 @@
     "lodash": "^4.17.21",
     "mysql2": "^2.3.3",
     "sequelize": "^6.21.6",
-    "winston": "^3.8.2"
+    "winston": "^3.8.2",
+    "zod": "^3.19.1"
   },
   "devDependencies": {
     "@faker-js/faker": "^7.5.0",
