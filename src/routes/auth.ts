@@ -3,11 +3,23 @@ import express from "express"
 import { signupController } from "../controllers/auth/signupController"
 import { signinController } from "../controllers/auth/signinController"
 
-import { signupValidatorMiddleware } from "../helpers/validation/validators"
+import {
+  validatorMiddleware,
+  zodSigninValidator,
+  zodSignupValidator,
+} from "../helpers/"
 
 const auth = express.Router()
 
-auth.post("/auth/signup", signupValidatorMiddleware, signupController)
-auth.post("/auth/signin", signinController)
+auth.post(
+  "/auth/signup",
+  validatorMiddleware(zodSignupValidator),
+  signupController
+)
+auth.post(
+  "/auth/signin",
+  validatorMiddleware(zodSigninValidator),
+  signinController
+)
 
 export default auth
