@@ -22,7 +22,15 @@ export const updateUserProfileController = async (
     req.headers.authorization as string
   ) as jwt.JwtPayload
 
+  if (!data) {
+    return res.status(400).send({
+      type: "error",
+      message: "Invalid token",
+    })
+  }
+
   const { userId } = data as JwtPayload
+
   const user = (await UsersProfileModel.findOne({
     where: { userId },
   })) as IUsersProfileModel
