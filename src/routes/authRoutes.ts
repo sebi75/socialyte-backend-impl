@@ -1,13 +1,12 @@
 import express from "express"
 
-import { signupController } from "../controllers/auth/signupController"
-import { signinController } from "../controllers/auth/signinController"
+import { signupController, signinController } from "../controllers"
 
 import {
   validatorMiddleware,
   zodSigninValidator,
   zodSignupValidator,
-} from "../helpers/"
+} from "../helpers"
 
 const auth = express.Router()
 

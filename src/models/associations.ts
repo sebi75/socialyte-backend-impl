@@ -11,6 +11,7 @@ export const setAssociations = () => {
   UsersModel.hasMany(PostsModel, { foreignKey: "ownerId" })
   UsersModel.hasMany(LikesModel, { foreignKey: "userId" })
   UsersModel.hasMany(CommentsModel, { foreignKey: "userId" })
+  UsersModel.hasOne(UsersProfileModel, { foreignKey: "userId" })
 
   //demo: still to test if this works
   UsersModel.belongsToMany(UsersModel, {

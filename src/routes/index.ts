@@ -1,3 +1,4 @@
-import authRouter from "./auth"
+import authRouter from "./authRoutes"
+import usersRouter from "./usersRoutes"
 
-export { authRouter }
+export { authRouter, usersRouter }
