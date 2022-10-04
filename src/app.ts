@@ -17,8 +17,10 @@ setAssociations()
 app.use(bodyParser.json())
 
 import { authRouter } from "./routes"
+import { usersRouter } from "./routes"
 
 app.use("/api", authRouter)
+app.use("/api", usersRouter)
 
 app.listen(PORT, () => {
   console.log(`Server is running at http://localhost:${PORT}`)

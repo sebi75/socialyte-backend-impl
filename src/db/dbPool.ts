@@ -1,6 +1,7 @@
 import { getDbConfiguration, sequelizeConfig } from "../config/environment"
 import * as dotenv from "dotenv"
 import { Sequelize } from "sequelize"
+import { setAssociations } from "../models"
 
 dotenv.config()
 
@@ -13,9 +14,11 @@ const connectToDB = async (env: "test" | "development") => {
     `mysql://${user}:${password}@${host}:${port}/${database}`,
     ...sequelizeConfig
   )
+  //setAssociations()
 
   try {
     await sequelize.authenticate()
+
     if (env === "test") {
       await sequelize.sync({ alter: true })
     } else {
