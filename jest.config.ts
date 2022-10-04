@@ -13,7 +13,7 @@ const config: Config = {
   },
   setupFilesAfterEnv: ["./src/setupTests.ts"],
   ...ts_preset,
-  verbose: false, //option when we don't want to show console.logs in tests, when it is true it doesn't show them
+  verbose: true, //we want to see the tests being run
 }
 
 export default config

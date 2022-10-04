@@ -7,7 +7,8 @@
     "build": "npx tsc",
     "dev:deprecated": "concurrently \"npx tsc --watch\" \"nodemon -q dist/app.js\"",
     "dev": "cross-env NODE_ENV=development ts-node-dev src/app.ts",
-    "test": "cross-env NODE_ENV=test jest --detectOpenHandles"
+    "test": "cross-env NODE_ENV=test jest --runInBand",
+    "test:silent": "cross-env NODE_ENV=test jest --runInBand --silent"
   },
   "keywords": [],
   "author": "",

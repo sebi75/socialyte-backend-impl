@@ -1,7 +1,7 @@
 import { helloController } from "../controllers/helloController"
 import { Methods } from "../helpers/types"
 
-describe("Hello test suite", () => {
+describe.skip("Hello test suite", () => {
   it("should receive 'Hello world' in res", () => {
     const req = {
       method: Methods.GET,

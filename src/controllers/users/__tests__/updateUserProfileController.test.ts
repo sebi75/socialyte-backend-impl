@@ -1,3 +1,4 @@
+require("iconv-lite").encodingExists("foo")
 import { updateUserProfileController } from "../updateUserProfileController"
 import truncate from "../../../scripts/db/truncate"
 import { userModelFactory } from "../../../helpers/factories/user"
@@ -80,7 +81,7 @@ describe("updateUserProfileController", () => {
     expect(send.mock.calls[0][0].type).toBe("error")
   })
 
-  afterAll(async () => {
+  afterEach(async () => {
     await truncate()
   })
 })

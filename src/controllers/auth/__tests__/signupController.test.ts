@@ -1,3 +1,4 @@
+require("iconv-lite").encodingExists("foo")
 import { signupController } from "../signupController"
 import { userModelFactory } from "../../../helpers/factories/user"
 import { Methods } from "../../../helpers/types"
@@ -6,17 +7,22 @@ import { UsersModel } from "../../../models"
 import { encryptPassword } from "../../../utils/encryptPassword"
 import request from "supertest"
 import express from "express"
-import { signupValidatorMiddleware } from "../../../helpers/validation/validators"
+import {
+  validatorMiddleware,
+  zodSignupValidator,
+} from "../../../helpers/validation/validators"
 
 const app = express()
-app.post("/auth/signup", signupValidatorMiddleware, signupController)
+app.post(
+  "/auth/signup",
+  validatorMiddleware(zodSignupValidator),
+  signupController
+)
 
 let users = userModelFactory(5)
 
 describe("signupController", () => {
-  beforeEach(async () => {
-    //I tried in the setupTests beforeAll, but for some reason it crashes and doesn't work.
-    //TODO: figure out why after all the tests are ran, an error is displayed in the console: ***ConnectionManager.getConnection was called after the connection manager was closed!***
+  afterAll(async () => {
     await truncate()
   })
 

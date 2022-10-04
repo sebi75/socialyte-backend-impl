@@ -1,3 +1,4 @@
+require("iconv-lite").encodingExists("foo")
 import { signupController } from "../signupController"
 import { signinController } from "../signinController"
 import { userModelFactory } from "../../../helpers/factories/user"
@@ -6,8 +7,11 @@ import truncate from "../../../scripts/db/truncate"
 
 let users = userModelFactory(5)
 
-describe("signupController", () => {
-  //create five different accounts
+describe("signinController", () => {
+  afterAll(async () => {
+    await truncate()
+  })
+
   beforeAll(async () => {
     const req = {
       body: {
@@ -69,11 +73,7 @@ describe("signupController", () => {
     //abstract validation for now and test if it throws an error only if there isn't any email/password
     //@ts-ignore
     await signinController(req, res)
-    expect(send.mock.calls[0][0].error).toBe("EINVALIDCREDENTIALS")
-  })
-
-  afterAll(async () => {
-    await truncate()
+    expect(send.mock.calls[0][0].error).toBe("ENOENTUSER")
   })
 })
 
