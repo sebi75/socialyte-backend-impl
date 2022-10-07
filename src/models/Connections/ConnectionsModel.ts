@@ -30,10 +30,18 @@ export const ConnectionsModel = sequelize.define<IConnectionsModel>(
     followingId: {
       type: DataTypes.UUID,
       allowNull: false,
+      references: {
+        model: "Users",
+        key: "userId",
+      },
     },
     followerId: {
       type: DataTypes.UUID,
       allowNull: false,
+      references: {
+        model: "Users",
+        key: "userId",
+      },
     },
     createdAt: {
       type: DataTypes.DATE,

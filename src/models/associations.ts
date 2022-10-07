@@ -7,22 +7,33 @@ import {
   UsersProfileModel,
 } from "./"
 
-export const setAssociations = () => {
+export const setAssociations = async () => {
   UsersModel.hasMany(PostsModel, { foreignKey: "ownerId" })
   UsersModel.hasMany(LikesModel, { foreignKey: "userId" })
   UsersModel.hasMany(CommentsModel, { foreignKey: "userId" })
   UsersModel.hasOne(UsersProfileModel, { foreignKey: "userId" })
 
-  //demo: still to test if this works
+  /* Defining many-to-many in sequelize and even to the same table is a bit tricky, but it is done as down below */
   UsersModel.belongsToMany(UsersModel, {
     through: ConnectionsModel,
-    as: "followerId",
+    as: "following",
     foreignKey: "followerId",
   })
   UsersModel.belongsToMany(UsersModel, {
     through: ConnectionsModel,
-    as: "followingId",
+    as: "follower",
     foreignKey: "followingId",
+  })
+
+  ConnectionsModel.belongsTo(UsersModel, {
+    foreignKey: "followerId",
+    targetKey: "userId",
+    as: "follower",
+  })
+  ConnectionsModel.belongsTo(UsersModel, {
+    foreignKey: "followingId",
+    targetKey: "userId",
+    as: "following",
   })
 
   PostsModel.belongsTo(UsersModel, { foreignKey: "ownerId" })
@@ -39,4 +50,48 @@ export const setAssociations = () => {
     foreignKey: "userId",
     onDelete: "CASCADE",
   })
+
+  const getUserProfile = await UsersProfileModel.findOne({
+    where: { userId: ["c9e5211b-deb1-4635-9394-1cde45ea595b"] },
+    attributes: ["userId", "bio"],
+    include: {
+      model: UsersModel,
+      attributes: ["email", "username", "createdAt"],
+    },
+  })
+  console.log({ getUserProfile: getUserProfile?.toJSON() })
+
+  const getUserWithProfile = await UsersModel.findOne({
+    where: { userId: "c9e5211b-deb1-4635-9394-1cde45ea595b" },
+    attributes: ["email", "username", "createdAt"],
+    include: {
+      model: UsersProfileModel,
+      attributes: ["userId", "bio"],
+    },
+  })
+
+  const followers = await ConnectionsModel.findAll({
+    where: { followingId: "4f6e4266-d783-4bbb-b53d-786649dd7d0e" },
+    include: [
+      {
+        model: UsersModel,
+        as: "follower",
+        attributes: ["email", "username", "createdAt"],
+      },
+    ],
+  })
+  console.log({ followers: followers })
+
+  console.log({ getUserWithProfile: getUserWithProfile?.toJSON() })
+
+  /* const testConnectionsQuery = await ConnectionsModel.findAll({
+    where: { followingId: "4f6e4266-d783-4bbb-b53d-786649dd7d0e" },
+    include: {
+      model: UsersModel,
+      attributes: ["email", "username", "createdAt"],
+    },
+  })
+  console.log({
+    testConnectionsQuery: testConnectionsQuery.map((test) => test.toJSON()),
+  }) */
 }

@@ -4,9 +4,6 @@ import { logger } from "../../utils"
 
 export const getUserController = async (req: Request, res: Response) => {
   const { userId, includeProfile } = req.params
-  console.log("*******")
-  console.log({ userId, includeProfile })
-  console.log("*******")
   if (!userId) {
     return res.status(400).send({
       type: "error",
