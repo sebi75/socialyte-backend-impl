@@ -12,10 +12,22 @@ export const getUserController = async (req: Request, res: Response) => {
   }
 
   try {
-    const user = await UsersModel.findOne({
-      where: { userId },
-      include: includeProfile ? UsersProfileModel : [],
-    })
+    let user
+    if (includeProfile) {
+      user = await UsersModel.findOne({
+        where: { userId },
+        include: [
+          {
+            model: UsersProfileModel,
+            as: "userData",
+          },
+        ],
+      })
+    } else {
+      user = await UsersModel.findOne({
+        where: { userId },
+      })
+    }
 
     if (!user) {
       return res.status(404).send({

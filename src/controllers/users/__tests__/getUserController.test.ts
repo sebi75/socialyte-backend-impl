@@ -56,7 +56,7 @@ describe("getUserController", () => {
       expect(response.status).toBe(200)
       const parsedResponse = JSON.parse(response.text)
       expect(parsedResponse.type).toBe("success")
-      expect(parsedResponse.user.UserProfile.createdAt).toBeTruthy()
+      expect(parsedResponse.user.userData.createdAt).toBeTruthy()
     }
   })
 

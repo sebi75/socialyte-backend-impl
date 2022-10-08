@@ -7,14 +7,14 @@
     "build": "npx tsc",
     "dev:deprecated": "concurrently \"npx tsc --watch\" \"nodemon -q dist/app.js\"",
     "dev": "cross-env NODE_ENV=development ts-node-dev src/app.ts",
-    "test": "cross-env NODE_ENV=test jest --runInBand",
+    "test": "cross-env NODE_ENV=test jest",
     "test:silent": "cross-env NODE_ENV=test jest --runInBand --silent"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "body-parser": "^1.20.0",
+    "body-parser": "^1.20.1",
     "cross-env": "^7.0.3",
     "dotenv": "^16.0.2",
     "express": "^4.18.1",

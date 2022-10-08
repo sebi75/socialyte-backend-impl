@@ -11,9 +11,12 @@ export const setAssociations = async () => {
   UsersModel.hasMany(PostsModel, { foreignKey: "ownerId" })
   UsersModel.hasMany(LikesModel, { foreignKey: "userId" })
   UsersModel.hasMany(CommentsModel, { foreignKey: "userId" })
-  UsersModel.hasOne(UsersProfileModel, { foreignKey: "userId" })
+  UsersModel.hasOne(UsersProfileModel, {
+    foreignKey: "userId",
+    as: "userData",
+  })
 
-  /* Defining many-to-many in sequelize and even to the same table is a bit tricky, but it is done as down below */
+  /* Defining many-to-many in sequelize to the same table is a bit tricky, but it is done as down below */
   UsersModel.belongsToMany(UsersModel, {
     through: ConnectionsModel,
     as: "following",
@@ -49,14 +52,16 @@ export const setAssociations = async () => {
   UsersProfileModel.belongsTo(UsersModel, {
     foreignKey: "userId",
     onDelete: "CASCADE",
+    as: "userData",
   })
 
-  const getUserProfile = await UsersProfileModel.findOne({
+  /* const getUserProfile = await UsersProfileModel.findOne({
     where: { userId: ["c9e5211b-deb1-4635-9394-1cde45ea595b"] },
     attributes: ["userId", "bio"],
     include: {
       model: UsersModel,
       attributes: ["email", "username", "createdAt"],
+      as: "userData",
     },
   })
   console.log({ getUserProfile: getUserProfile?.toJSON() })
@@ -67,6 +72,7 @@ export const setAssociations = async () => {
     include: {
       model: UsersProfileModel,
       attributes: ["userId", "bio"],
+      as: "userData",
     },
   })
 
@@ -82,16 +88,5 @@ export const setAssociations = async () => {
   })
   console.log({ followers: followers })
 
-  console.log({ getUserWithProfile: getUserWithProfile?.toJSON() })
-
-  /* const testConnectionsQuery = await ConnectionsModel.findAll({
-    where: { followingId: "4f6e4266-d783-4bbb-b53d-786649dd7d0e" },
-    include: {
-      model: UsersModel,
-      attributes: ["email", "username", "createdAt"],
-    },
-  })
-  console.log({
-    testConnectionsQuery: testConnectionsQuery.map((test) => test.toJSON()),
-  }) */
+  console.log({ getUserWithProfile: getUserWithProfile?.toJSON() }) */
 }

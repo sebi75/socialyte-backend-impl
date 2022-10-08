@@ -1,6 +1,6 @@
 import { Request, Response } from "express"
 
-import { ConnectionsModel, UsersModel } from "../../models"
+import { ConnectionsModel, UsersModel, UsersProfileModel } from "../../models"
 import { logger } from "../../utils"
 
 export const getFollowersController = async (req: Request, res: Response) => {
@@ -14,10 +14,31 @@ export const getFollowersController = async (req: Request, res: Response) => {
   }
 
   try {
-    const followers: any = await ConnectionsModel.findAll({
+    const followers = await ConnectionsModel.findAll({
       where: { followingId: userId },
+      attributes: [],
+      include: [
+        {
+          model: UsersModel,
+          as: "follower",
+          attributes: ["email", "username", "createdAt", "userId"],
+          include: [
+            {
+              model: UsersProfileModel,
+              attributes: ["bio", "country", "city"],
+              as: "userData",
+            },
+          ],
+        },
+      ],
     })
-    console.log(followers[0])
+    followers.map((follower) => {
+      console.log(follower.toJSON())
+    })
+    return res.status(200).send({
+      type: "success",
+      followers,
+    })
   } catch (error) {
     logger.error(`Getting followers failed: ${error}`)
   }
