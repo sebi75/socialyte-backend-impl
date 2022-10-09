@@ -16,6 +16,9 @@ export enum Errors {
   NO_USER_FOUND = "No user found",
   NO_USER_ID_OR_TOKEN_PROVIDED = "No user id or token provided",
   INVALID_PASSWORD = "Invalid password",
+  ALREADY_FOLLOWING = "Already following",
+  NOT_FOLLOWING = "Not following",
+  UNAUTHORIZED = "Unauthorized",
 }
 
 export enum RESPONSE_TYPES {

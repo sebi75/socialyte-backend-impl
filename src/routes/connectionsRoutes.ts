@@ -1,10 +1,29 @@
 import express from "express"
 
-import { followUserController, getFollowersController } from "../controllers"
+import {
+  followUserController,
+  getFollowersController,
+  followableMiddleware,
+  unfollowUserController,
+  unfollowableMiddleware,
+  getFollowingsController,
+} from "../controllers"
 
 const connections = express.Router()
 
-connections.post("/connections/:userId/:followUserId", followUserController)
+connections.get("/connections/followers", getFollowersController)
+connections.get("/connections/followings", getFollowingsController)
+
+connections.post(
+  "/connections/follow",
+  followableMiddleware,
+  followUserController
+)
+connections.post(
+  "connections/unfollow",
+  unfollowableMiddleware,
+  unfollowUserController
+)
 connections.get("/connections/:userId", getFollowersController)
 
 export default connections
