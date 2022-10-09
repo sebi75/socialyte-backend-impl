@@ -19,6 +19,10 @@ export enum Errors {
   ALREADY_FOLLOWING = "Already following",
   NOT_FOLLOWING = "Not following",
   UNAUTHORIZED = "Unauthorized",
+  MISSING_FIELDS = "Missing fields",
+  NOT_FOUND = "Not found",
+  ALREADY_LIKED = "Already liked",
+  NOT_LIKED = "Not liked",
 }
 
 export enum RESPONSE_TYPES {
