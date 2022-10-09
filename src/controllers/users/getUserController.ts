@@ -2,20 +2,24 @@ import { Request, Response } from "express"
 import { UsersModel, UsersProfileModel } from "../../models"
 import { logger } from "../../utils"
 
+import { StatusCodes, Errors, RESPONSE_TYPES } from "../../types/"
+
 export const getUserController = async (req: Request, res: Response) => {
-  const { userId, includeProfile } = req.params
-  if (!userId) {
-    return res.status(400).send({
-      type: "error",
-      errorMessage: "No userId provided",
+  const { username } = req.params
+  const includeProfile = req.query.includeProfile as string
+
+  if (!username) {
+    return res.status(StatusCodes.BAD_REQUEST).send({
+      type: RESPONSE_TYPES.ERROR,
+      errorMessage: Errors.NO_USERNAME_PROVIDED,
     })
   }
 
   try {
     let user
-    if (includeProfile) {
+    if (stringToBoolean(includeProfile)) {
       user = await UsersModel.findOne({
-        where: { userId },
+        where: { username },
         include: [
           {
             model: UsersProfileModel,
@@ -25,26 +29,37 @@ export const getUserController = async (req: Request, res: Response) => {
       })
     } else {
       user = await UsersModel.findOne({
-        where: { userId },
+        where: { username },
       })
     }
 
     if (!user) {
-      return res.status(404).send({
-        type: "error",
-        errorMessage: "User not found",
+      return res.status(StatusCodes.NOT_FOUND).send({
+        type: RESPONSE_TYPES.ERROR,
+        errorMessage: Errors.USER_NOT_FOUND,
       })
     }
 
-    return res.status(200).send({
-      type: "success",
+    return res.status(StatusCodes.OK).send({
+      type: RESPONSE_TYPES.SUCCESS,
       user,
     })
   } catch (error) {
     logger.error(`Getting user failed: ${error}`)
-    return res.status(500).send({
-      type: "error",
-      errorMessage: "Something went wrong",
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({
+      type: RESPONSE_TYPES.ERROR,
+      errorMessage: Errors.SOMETHING_WENT_WRONG,
     })
+  }
+}
+
+const stringToBoolean = (string: string | undefined): boolean => {
+  switch (string) {
+    case "true":
+      return true
+    case "false":
+      return false
+    default:
+      return false
   }
 }

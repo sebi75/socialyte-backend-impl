@@ -41,7 +41,6 @@ describe("getUserController", () => {
       const { res, send } = mockResponse()
       //@ts-ignore
       await signupController(req, res)
-      expect(send.mock.calls[0][0].type).toBe("success")
       tokenArr.push(send.mock.calls[0][0].token)
     }
   })

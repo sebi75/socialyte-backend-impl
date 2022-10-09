@@ -4,6 +4,9 @@ import { encryptPassword } from "../../utils/encryptPassword"
 import { logger } from "../../utils"
 import jwt from "jsonwebtoken"
 import dotenv from "dotenv"
+
+import { StatusCodes, Errors, RESPONSE_TYPES } from "../../types/"
+
 dotenv.config()
 
 export const signupController = async (req: Request, res: Response) => {
@@ -16,9 +19,9 @@ export const signupController = async (req: Request, res: Response) => {
   })
 
   if (userExists) {
-    return res.status(400).send({
+    return res.status(StatusCodes.BAD_REQUEST).send({
       type: "error",
-      errorMessage: "User already exists",
+      errorMessage: Errors.USER_ALREADY_EXISTS,
     })
   }
 
@@ -29,28 +32,30 @@ export const signupController = async (req: Request, res: Response) => {
       hashed_password: hashedPassword,
       username: username,
     })
-    const usersProfile = await UsersProfileModel.create({
+
+    await UsersProfileModel.create({
       userId: user.userId,
+      bio: "",
+      city: "",
+      country: "",
     })
 
     logger.info(`New user created with email: ${email}`)
-    //generate token at successfull signup so the user doesn't have to manually signin right after
     const token = jwt.sign(
       { email: user.email, userId: user.userId },
       process.env.JWT_SECRET as string,
       { expiresIn: "12h" }
     )
 
-    return res.status(200).send({
-      type: "success",
-      message: "User created successfully",
+    return res.status(StatusCodes.OK).send({
+      type: RESPONSE_TYPES.SUCCESS,
       token,
     })
   } catch (error) {
     logger.error(`Error creating user: ${error}`)
-    return res.status(400).send({
-      type: "error",
-      error: "Error creating user",
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({
+      type: RESPONSE_TYPES.ERROR,
+      errorMessage: Errors.SOMETHING_WENT_WRONG,
     })
   }
 }

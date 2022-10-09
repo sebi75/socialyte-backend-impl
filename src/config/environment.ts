@@ -33,5 +33,6 @@ export const sequelizeConfig = [
       idle: 10000,
     },
     logging: false,
+    dialect: "mysql" as const,
   },
 ]

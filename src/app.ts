@@ -1,7 +1,7 @@
 import express from "express"
 import * as dotenv from "dotenv"
 
-//import bodyParser from "body-parser"
+import bodyParser from "body-parser"
 import { setAssociations } from "./models"
 
 dotenv.config()
@@ -16,7 +16,8 @@ const app: express.Application = express()
 const PORT = process.env.PORT
 
 setAssociations()
-//app.use(bodyParser.json())
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true }))
 
 import { authRouter } from "./routes"
 import { usersRouter } from "./routes"

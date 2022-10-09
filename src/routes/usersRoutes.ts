@@ -1,15 +1,10 @@
-import express, { Request, Response } from "express"
-import { range } from "lodash"
+import express from "express"
 
-import { getUserController } from "../controllers/users/getUserController"
+import { getUserController, updateUserProfileController } from "../controllers"
 
 const users = express.Router()
 
-users.get("/users/:userId/:includeProfile?", getUserController)
-
-users.post("/users/upload", (req: Request, res: Response) => {
-  console.log(req.headers["content-type"])
-  console.log(req.body)
-})
+users.get("/users/:username/:includeProfile?", getUserController)
+users.post("/users/update", updateUserProfileController)
 
 export default users

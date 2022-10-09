@@ -1,4 +1,6 @@
-import { signupController } from "./auth/signupController"
-import { signinController } from "./auth/signinController"
-
-export { signupController, signinController }
+export { signupController } from "./auth/signupController"
+export { signinController } from "./auth/signinController"
+export { followUserController } from "./connections/followUserController"
+export { getFollowersController } from "./connections/getFollowersController"
+export { getUserController } from "./users/getUserController"
+export { updateUserProfileController } from "./users/updateUserProfileController"

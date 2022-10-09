@@ -5,6 +5,8 @@ import jwt from "jsonwebtoken"
 import { JwtPayload } from "../../types"
 import { logger } from "../../utils"
 
+import { Errors, RESPONSE_TYPES, StatusCodes } from "../../types"
+
 interface UpdatingFields {
   profilePicture?: string
   bio?: string
@@ -13,7 +15,6 @@ interface UpdatingFields {
   city?: string
 }
 
-//is the user gets here we know the token is valid and so has the valid information about him: userId and email
 export const updateUserProfileController = async (
   req: Request,
   res: Response
@@ -23,9 +24,9 @@ export const updateUserProfileController = async (
   ) as jwt.JwtPayload
 
   if (!data) {
-    return res.status(400).send({
-      type: "error",
-      message: "Invalid token",
+    return res.status(StatusCodes.BAD_REQUEST).send({
+      type: RESPONSE_TYPES.ERROR,
+      message: Errors.INVALID_TOKEN,
     })
   }
 
@@ -38,18 +39,16 @@ export const updateUserProfileController = async (
   const updatingFields = req.body as UpdatingFields
   try {
     await user.update(updatingFields)
-    //send the whole user object back when it is successfully updated
-    return res.status(200).send({
-      type: "success",
-      user: {
-        ...user,
-      },
+
+    return res.status(StatusCodes.OK).send({
+      type: RESPONSE_TYPES.SUCCESS,
+      user,
     })
   } catch (error) {
     logger.error(`Updating user profile failed: ${error}`)
-    return res.status(500).send({
-      type: "error",
-      message: "Updating user profile failed",
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({
+      type: RESPONSE_TYPES.ERROR,
+      message: Errors.SOMETHING_WENT_WRONG,
     })
   }
 }
