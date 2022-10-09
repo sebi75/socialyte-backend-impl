@@ -17,6 +17,7 @@ export interface IPostsModel
   postCaption: string
   createdAt: CreationOptional<Date>
   updatedAt: CreationOptional<Date>
+  media: Buffer
 }
 
 export const PostsModel = sequelize.define<IPostsModel>("Posts", {
@@ -36,6 +37,10 @@ export const PostsModel = sequelize.define<IPostsModel>("Posts", {
   },
   postCaption: {
     type: DataTypes.STRING,
+    allowNull: false,
+  },
+  media: {
+    type: DataTypes.BLOB("long"),
     allowNull: false,
   },
   createdAt: {

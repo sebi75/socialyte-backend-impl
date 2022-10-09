@@ -4,6 +4,9 @@ import { UsersModel } from "../../models"
 import jwt from "jsonwebtoken"
 import dotenv from "dotenv"
 import { logger } from "../../utils"
+
+import { StatusCodes, Errors, RESPONSE_TYPES } from "../../types/"
+
 dotenv.config()
 
 export const signinController = async (req: Request, res: Response) => {
@@ -16,9 +19,9 @@ export const signinController = async (req: Request, res: Response) => {
   })
 
   if (!user) {
-    return res.status(400).send({
-      error: "ENOENTUSER",
-      message: "User doesn't exist",
+    return res.status(StatusCodes.BAD_REQUEST).send({
+      type: RESPONSE_TYPES.ERROR,
+      message: Errors.NO_USER_FOUND,
     })
   }
 
@@ -31,15 +34,14 @@ export const signinController = async (req: Request, res: Response) => {
     )
 
     logger.info(`User ${user.email} just logged in!`)
-    return res.status(200).send({
-      type: "success",
-      message: "Signed in successfully",
+    return res.status(StatusCodes.OK).send({
+      type: RESPONSE_TYPES.SUCCESS,
       token,
     })
   } else {
-    return res.status(400).send({
-      error: "EINCORRECTPASSWORD",
-      message: "Invalid password",
+    return res.status(StatusCodes.BAD_REQUEST).send({
+      type: RESPONSE_TYPES.ERROR,
+      errorMessage: Errors.INVALID_PASSWORD,
     })
   }
 }

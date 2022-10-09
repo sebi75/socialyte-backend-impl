@@ -1,7 +1,6 @@
 import express from "express"
 
-import { followUserController } from "../controllers/connections/followUserController"
-import { getFollowersController } from "../controllers/connections/getFollowersController"
+import { followUserController, getFollowersController } from "../controllers"
 
 const connections = express.Router()
 

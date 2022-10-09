@@ -3,13 +3,15 @@ import { Request, Response } from "express"
 import { ConnectionsModel, UsersModel, UsersProfileModel } from "../../models"
 import { logger } from "../../utils"
 
+import { Errors, RESPONSE_TYPES, StatusCodes } from "../../types"
+
 export const getFollowersController = async (req: Request, res: Response) => {
   const { userId } = req.params
 
   if (!userId) {
-    return res.status(400).send({
-      type: "error",
-      errorMessage: "No userId provided",
+    return res.status(StatusCodes.BAD_REQUEST).send({
+      type: RESPONSE_TYPES.ERROR,
+      errorMessage: Errors.INVALID_CREDENTIALS,
     })
   }
 
@@ -32,14 +34,16 @@ export const getFollowersController = async (req: Request, res: Response) => {
         },
       ],
     })
-    followers.map((follower) => {
-      console.log(follower.toJSON())
-    })
-    return res.status(200).send({
-      type: "success",
+
+    return res.status(StatusCodes.OK).send({
+      type: RESPONSE_TYPES.SUCCESS,
       followers,
     })
   } catch (error) {
     logger.error(`Getting followers failed: ${error}`)
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({
+      type: RESPONSE_TYPES.ERROR,
+      errorMessage: Errors.SOMETHING_WENT_WRONG,
+    })
   }
 }
