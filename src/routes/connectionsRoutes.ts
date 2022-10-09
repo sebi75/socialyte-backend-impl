@@ -7,6 +7,7 @@ import {
   unfollowUserController,
   unfollowableMiddleware,
   getFollowingsController,
+  authMiddleware,
 } from "../controllers"
 
 const connections = express.Router()
@@ -16,11 +17,13 @@ connections.get("/connections/followings", getFollowingsController)
 
 connections.post(
   "/connections/follow",
+  authMiddleware,
   followableMiddleware,
   followUserController
 )
 connections.post(
   "connections/unfollow",
+  authMiddleware,
   unfollowableMiddleware,
   unfollowUserController
 )

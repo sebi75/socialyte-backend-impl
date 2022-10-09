@@ -3,12 +3,24 @@ import {
   createPostController,
   updatePostController,
   deletePostController,
+  authMiddleware,
+  isPostOwnerMiddleware,
 } from "../controllers"
 
 const posts = express.Router()
 
-posts.post("/posts/create", createPostController)
-posts.post("/posts/update", updatePostController)
-posts.delete("/posts/delete", deletePostController)
+posts.post("/posts/create", authMiddleware, createPostController)
+posts.post(
+  "/posts/update",
+  authMiddleware,
+  isPostOwnerMiddleware,
+  updatePostController
+)
+posts.delete(
+  "/posts/delete",
+  authMiddleware,
+  isPostOwnerMiddleware,
+  deletePostController
+)
 
 export default posts

@@ -39,7 +39,7 @@ export { unfollowableMiddleware } from "./connections/middleware/unfollowableMid
 export { authMiddleware } from "./auth/middleware/authMiddleware"
 
 /* POSTS MIDDLEWARES */
-export {} from "./post/middleware/createPostValidationMiddleware"
+export { isPostOwnerMiddleware } from "./post/middleware/isPostOwnerMiddleware"
 
 /* LIKES MIDDLEWARE */
 export { isLikeableMiddleware } from "./likes/middleware/isLikeableMiddleware"
