@@ -22,6 +22,15 @@ export { getFollowingsController } from "./connections/getFollowingsController"
 export { likePostController } from "./likes/likePostController"
 export { unlikePostController } from "./likes/unlikePostController"
 
+/* COMMENTS */
+export { createCommentController } from "./comments/createCommentController"
+export { updateCommentController } from "./comments/updateCommentController"
+export { getPostCommentsController } from "./comments/getPostCommentsController"
+export { deleteCommentController } from "./comments/deleteCommentController"
+
+/* COMMENTS MIDDLEWARES */
+export { existsCommentMiddleware } from "./comments/middleware/existsCommentMiddleware"
+
 /* CONNECTIONS MIDDLEWARES */
 export { followableMiddleware } from "./connections/middleware/followableMiddleware"
 export { unfollowableMiddleware } from "./connections/middleware/unfollowableMiddleware"

@@ -19,15 +19,21 @@ setAssociations()
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 
-import { authRouter } from "./routes"
-import { usersRouter } from "./routes"
-import { connectionsRouter } from "./routes"
-import { postRoutes } from "./routes"
+import {
+  authRouter,
+  commentsRoutes,
+  connectionsRouter,
+  likesRoutes,
+  postRoutes,
+  usersRouter,
+} from "./routes"
 
 app.use("/api", authRouter)
 app.use("/api", usersRouter)
 app.use("/api", connectionsRouter)
 app.use("/api", postRoutes)
+app.use("/api", likesRoutes)
+app.use("/api", commentsRoutes)
 
 app.listen(PORT, () => {
   console.log(`Server is running at http://localhost:${PORT}`)
