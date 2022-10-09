@@ -20,6 +20,7 @@ export const authMiddleware = async (
 
   try {
     jwt.verify(authToken, process.env.JWT_SECRET as string)
+    req.body.userId = (jwt.decode(authToken) as JwtPayload).userId
     return next()
   } catch (error) {
     logger.error(`Someone tried to use an invalid token`)
