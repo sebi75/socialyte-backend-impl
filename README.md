@@ -2,7 +2,7 @@ This repository is a backend implementation for what was used on the socialyte m
 
 From firebase BAAS to a custom backend implementation, from non-relational cloud firestore to relational db mysql and sequelize ORM.
 
-Tried to implement some tests, but I'm afraid the only ones that there'll be are these right now.
+Wanted to implement tests, but I'm afraid the only ones that they're gonna be be are these.
 
 Things this API supports are:
 
